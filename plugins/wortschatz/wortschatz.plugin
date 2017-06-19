@@ -1,0 +1,6 @@
+[Plugin]
+Module=wortschatz
+Loader=python3
+Name=wortschatz
+Description=get a summary of Leipziger Wortschatz
+
