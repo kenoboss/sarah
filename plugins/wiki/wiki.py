@@ -22,6 +22,7 @@
 #
 #
 import wikipedia
+import re
 import gi
 gi.require_version('Peas', '1.0')
 gi.require_version('Sarah', '1.0')
@@ -34,8 +35,19 @@ class WikiPlugin(GObject.Object, Sarah.IExtension):
     object = GObject.property(type=GObject.Object)
 
     def do_activate(self, args, argv):
-        wikipedia.set_lang("de")
-        print(wikipedia.summary(' '.join(args), sentences=2))
+        lang = args[0]
+        langTrue = str(lang) in wikipedia.languages()
+        if langTrue == True:
+            wikipedia.set_lang(str(lang))
+            print(wikipedia.summary(' '.join(args[1:]), sentences=3))
+        else:
+            if re.search(lang,"[a-z][a-z]+"):
+                print(str(lang)+" not found")
+                wikipedia.set_lang("en")
+                print(wikipedia.summary(' '.join(args[1:]), sentences=3))
+            else:
+                wikipedia.set_lang("en")
+                print(wikipedia.summary(' '.join(args), sentences=3))
 
     def do_deactivate(self):
         pass
