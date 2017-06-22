@@ -41,8 +41,8 @@ class WikiPlugin(GObject.Object, Sarah.IExtension):
             wikipedia.set_lang(str(lang))
             print(wikipedia.summary(' '.join(args[1:]), sentences=3))
         else:
-            if re.search(lang,"[a-z][a-z]+"):
-                print(str(lang)+" not found")
+            if not re.search(lang,"[a-z][a-z]+"):
+                print("'"+str(lang)+"' not found as language, trying to find a summary in the english language")
                 wikipedia.set_lang("en")
                 print(wikipedia.summary(' '.join(args[1:]), sentences=3))
             else:
